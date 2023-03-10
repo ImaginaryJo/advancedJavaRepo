@@ -1,2 +1,9 @@
 /InventoryControl_04.class
 /LoggerClass.class
+/DatabaseReader.class
+/Database.class
+/InventoryControl_06.class
+/InventoryControl_07.class
+/ManagerInterface.class
+/HrInterface.class
+/EmployeeInterface.class
