@@ -16,6 +16,7 @@ public class DatabaseReader {
 	static String subMenuChoice;
 	static int questionIndex;
 
+<<<<<<< HEAD
 	// Connection
 	public DatabaseReader() {
 		try {
@@ -24,6 +25,70 @@ public class DatabaseReader {
 			String user = "root";
 			String password = "Jmulletis22!!";
 			conn = DriverManager.getConnection(url, user, password);
+=======
+    // Connection
+    public DatabaseReader() {
+        try {
+            // Establish a connection to the database
+            String url = "jdbc:mysql://ipAddress/databasename";
+            String user = "root";
+            String password = "password";
+            conn = DriverManager.getConnection(url, user, password);
+            
+            stmt = conn.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    //Login method
+    public String[] authenticateUser() throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT employee_type, first_name, last_name, username FROM employees WHERE username = ? AND password = ?");
+        System.out.print("\nEnter your username: ");
+        String username = dbScanner.nextLine();
+        System.out.print("Enter your password: ");
+        String password = dbScanner.nextLine();
+        stmt.setString(1, username);
+        stmt.setString(2, password);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            String[] result = new String[4];
+            result[0] = rs.getString("employee_type");
+            result[1] = rs.getString("first_name");
+            result[2] = rs.getString("last_name");
+            result[3] = rs.getString("username");
+            return result;
+        }
+        return null;
+    }
+    
+    // Logs entries uploaded to database
+    public static void uploadLog (String severity, String logEntry) throws SQLException {
+        String createRecord = "INSERT INTO logs (severity, logEntry) VALUES (?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(createRecord);
+        stmt.setString(1, severity);
+        stmt.setString(2, logEntry);
+        stmt.executeUpdate();
+    }
+    
+    // Read log entries from database
+    public static void readLogFromDb() throws SQLException {
+        // Select all log records from the logs table
+        String selectLogs = "SELECT * FROM logs";
+        ResultSet rs = stmt.executeQuery(selectLogs);
+        
+        // Loop through the result set and print each log record
+        while (rs.next()) {
+            int logNum = rs.getInt("idLog");
+            String level = rs.getString("severity");
+            String logEntry = rs.getString("logEntry");
+            System.out.println("\nLog Number: " + logNum);
+            System.out.println("Level: " + level);
+            System.out.println("Log Entry: " + logEntry);
+            System.out.println();
+        }
+    }
+>>>>>>> 294f28c3b543ad9a4eaff52d7141f09d4db6d287
 
 			stmt = conn.createStatement();
 		} catch (SQLException e) {
