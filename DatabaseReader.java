@@ -21,7 +21,7 @@ public class DatabaseReader {
 	public DatabaseReader() {
 		try {
 			// Establish a connection to the database
-			String url = "jdbc:mysql://127.0.0.1:3306/ims";
+			String url = "jdbc:mysql://localhost:3306/ims";
 			String user = "root";
 			String password = "Jmulletis22!!";
 			conn = DriverManager.getConnection(url, user, password);
